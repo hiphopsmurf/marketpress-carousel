@@ -1,0 +1,3 @@
+[submodule "includes/jsCarousel"]
+	path = includes/jsCarousel
+	url = git://github.com/mshahbazsaleem/jsCarousel2.0.0.git
