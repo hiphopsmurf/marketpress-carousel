@@ -1,0 +1,13 @@
+/*NAV*/
+.jscarousal-horizontal-back { background-color:#000; background-image:url(http://sandboamorphs.com/wp-content/themes/rt_gantry_wp/nggallery/assets/gui/images/ThumbnailsPrevHover.png); background-repeat:no-repeat; opacity:1.0 !important; width:48px; height:28px; margin-top:30px; }
+.jscarousal-horizontal-forward { background-color:#000; background-image:url(http://sandboamorphs.com/wp-content/themes/rt_gantry_wp/nggallery/assets/gui/images/ThumbnailsNextHover.png); background-repeat:no-repeat; opacity:1.0 !important; width:48px; height:28px; margin-top:30px;}
+.jscarousal-horizontal-back:hover, .jscarousal-horizontal-forward:hover { opacity:0.7 !important; }
+
+/*IMGS*/
+.jscarousal-contents-horizontal { width:320px; }
+.jscarousal-horizontal { width:417px; height:auto; background-color:#000; border:0; padding:0; margin-top:-10px; }
+.jscarousal-contents-horizontal > div > div { margin:0 5px; }
+.image-wrapper { background:#f1f1f1; }
+.jscarousal-contents-horizontal img { width:92px; height:92px; border:1px solid #990000; padding:1px; }
+div.slider_product_meta { text-align:center; }
+div.mp_product span { text-align:center; font-size:11px; font-weight:300; margin-right:0; }
