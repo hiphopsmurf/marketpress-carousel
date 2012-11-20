@@ -8,7 +8,14 @@ Version: 1.0
 Author URI: http://cdsincdesign.com
 */
 
+define('MARKETPRESS_FEATURED_SLIDER_PATH', plugin_dir_path(__FILE__));
 define('MPC_PLUGIN_IMAGES_URL', plugins_url( '/images/', __FILE__ ));
+
+if (!class_exists('WP_Thumb') ) {
+	define( 'WP_THUMB_PATH', trailingslashit( MARKETPRESS_FEATURED_SLIDER_PATH . '/includes/wpthumb' ) );
+	define( 'WP_THUMB_URL', plugins_url( '/includes/wpthumb/', __FILE__ ));
+	require_once( MARKETPRESS_FEATURED_SLIDER_PATH . 'includes/wpthumb/wpthumb.php' );
+}
 
 define('MPC_FEATURED_SLIDER_IMAGE_WIDTH',  92);             //the width of your slider image (px)
 define('MPC_FEATURED_SLIDER_IMAGE_HEIGHT', 92);				//the height of your slider image (px)
@@ -151,7 +158,20 @@ function mpc_product_photo( $echo = true, $post_id = NULL, $link = true, $width 
 		return $content;
 }
 
-function mps_head_script(){
+function mpc_scripts_and_styles() {
+	wp_register_style('jsCarousel-css', plugins_url('includes/jsCarousel/jsCarousel-2.0.0.css', __FILE__), false, null);
+	wp_enqueue_style('jsCarousel-css');
+	//wp_register_style('pinky-css', plugins_url('carousel.css', __FILE__), false, null);
+	//wp_enqueue_style('pinky-css');
+	
+	wp_register_script('jsCarousel-js', plugins_url('includes/jsCarousel/jsCarousel-2.0.0.js', __FILE__), null, null, true);
+	wp_enqueue_script('jsCarousel-js');
+	
+}
+//add_action('wp_enqueue_scripts', 'mpc_scripts_and_styles');
+add_action('wp_head', 'mpc_scripts_and_styles');
+
+function mpc_head_script(){
 ?>
 <script type="text/javascript">
         $(document).ready(function() {
@@ -163,30 +183,33 @@ function mps_head_script(){
     </script>
 <?php
 }
-add_action('wp_head','mps_head_script');
-function mpc_scripts_and_styles() {
-	wp_register_style('jsCarousel-css', plugins_url('includes/jsCarousel/jsCarousel-2.0.0.css', __FILE__), false, null);
-	wp_enqueue_style('jsCarousel-css');
-	wp_register_style('pinky-css', plugins_url('carousel.css', __FILE__), false, null);
-	wp_enqueue_style('pinky-css');
-	
-	wp_register_script('jsCarousel-js', plugins_url('includes/jsCarousel/jsCarousel-2.0.0.js', __FILE__), null, null, true);
-	wp_enqueue_script('jsCarousel-js');
-	
+add_action('wp_head','mpc_head_script');
+
+function mpc_head_style(){
+?>
+<style>
+/*NAV*/
+.jscarousal-horizontal-back { background-color:#000; background-image:url(<?php echo MPS_PLUGIN_IMAGES_URL ?>ThumbnailsPrevHover.png); background-repeat:no-repeat; opacity:1.0 !important; width:48px; height:28px; margin-top:30px; }
+.jscarousal-horizontal-forward { background-color:#000; background-image:url(<?php echo MPS_PLUGIN_IMAGES_URL ?>ThumbnailsNextHover.png); background-repeat:no-repeat; opacity:1.0 !important; width:48px; height:28px; margin-top:30px;}
+.jscarousal-horizontal-back:hover, .jscarousal-horizontal-forward:hover { opacity:0.7 !important; }
+
+/*IMGS*/
+.jscarousal-contents-horizontal { width:320px; }
+.jscarousal-horizontal { width:417px; height:auto; background-color:#000; border:0; padding:0; margin-top:-10px; }
+.jscarousal-contents-horizontal > div > div { margin:0 5px; }
+.image-wrapper { background:#f1f1f1; }
+.jscarousal-contents-horizontal img { width:92px; height:92px; border:1px solid #990000; padding:1px; }
+div.slider_product_meta { text-align:center; }
+div.mp_product span { text-align:center; font-size:11px; font-weight:300; margin-right:0; }
+</style>
+<?php
 }
-add_action('wp_enqueue_scripts', 'mpc_scripts_and_styles');
-
-
-/*function show_the_slider(){
-	$the_code = mpc_featured_slider();
-}*/
+add_action('wp_head','mpc_head_script');
 
 function shortcode_wp_marketpress( $content = NULL ) {
 	
 	ob_start();
-	
-	//show_the_slider();
-	
+		
 	mpc_featured_slider();
 	
 	$output_string=ob_get_contents();
